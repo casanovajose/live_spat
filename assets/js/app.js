@@ -19,7 +19,31 @@ import NProgress from "nprogress"
 import {LiveSocket} from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+
+let Hooks = {}
+Hooks.MouseDown = {
+  mounted() {
+    this.el.addEventListener("pointermove", e => {
+      // console.log(e.target.nodeName)
+      // firefox is not handling fine this due to the pointer sometimes is over svg and sometimes over the circle.
+      // solved checking the nodeName 
+      if(e.target.nodeName == "svg" && e.pressure > 0){
+        this.pushEvent("MouseDown", {offsetX: e.offsetX, offsetY: e.offsetY,}, (reply, ref) => console.log(reply))
+      }
+    });
+  }
+}
+
+let liveSocket = new LiveSocket("/live", Socket, {
+  hooks: Hooks,
+  params: {_csrf_token: csrfToken},
+  metadata: {
+    click: (e, el) => {
+      return {offsetX: e.offsetX, offsetY: e.offsetY,}
+    }
+  }
+})
+
 
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())

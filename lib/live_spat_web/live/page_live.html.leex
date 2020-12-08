@@ -1,4 +1,5 @@
 <section class="phx-hero">
-  <svg width="250" height="250">
+  <svg phx-hook="MouseDown" width="250" height="250">
+    <circle cx="<%= @point.x %>" cy="<%= @point.y %>" r=6 stroke="<%= @color %>" fill="none" stroke-dasharray="3"/>
   </svg>
 </section>
