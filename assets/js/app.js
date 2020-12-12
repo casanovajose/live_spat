@@ -21,14 +21,27 @@ import {LiveSocket} from "phoenix_live_view"
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 let Hooks = {}
-Hooks.MouseDown = {
+Hooks.MouseDownPoint = {
   mounted() {
     this.el.addEventListener("pointermove", e => {
       // console.log(e.target.nodeName)
       // firefox is not handling fine this due to the pointer sometimes is over svg and sometimes over the circle.
       // solved checking the nodeName 
       if(e.target.nodeName == "svg" && e.pressure > 0){
-        this.pushEvent("MouseDown", {offsetX: e.offsetX, offsetY: e.offsetY,}, (reply, ref) => console.log(reply))
+        this.pushEvent("move_live_point", {offsetX: e.offsetX, offsetY: e.offsetY,}, (reply, ref) => console.log(reply))
+      }
+    });
+  }
+}
+
+Hooks.MouseDownTraj = {
+  mounted() {
+    this.el.addEventListener("pointermove", e => {
+      // console.log(e.target.nodeName)
+      // firefox is not handling fine this due to the pointer sometimes is over svg and sometimes over the circle.
+      // solved checking the nodeName 
+      if(e.target.nodeName == "svg" && e.pressure > 0){
+        this.pushEvent("add_traj_point", {offsetX: e.offsetX, offsetY: e.offsetY,}, (reply, ref) => console.log(reply))
       }
     });
   }
