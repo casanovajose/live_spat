@@ -14,13 +14,13 @@
         <circle cx="2" cy="2" r="2" stroke="#000" fill="#000"/>
     </marker>
 
-    <marker id="cross" markerWidth="4" markerHeight="4" refX="2" refY="2">>
-      <path d="M 3,3 L 7,7 M 3,7 L 7,3" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+    <marker id="cross" markerWidth="8" markerHeight="8" refX="2" refY="2">>
+      <path d="M 3,3 L 7,7 M 3,7 L 7,3" fill="none" stroke="rgba(0,0,0,1)" stroke-width="1"/>
     </marker>
 
     <polyline points="<%= @path %>"
       stroke="#000" fill="none" stroke-dasharray="5 3"
-      marker-end="url(#arrow)" marker-start="url(#circle)" marker-mid="url(#cross)"
+      marker-end="url(#arrow)" marker-start="url(#circle)"
     />
   </svg>
 </section>
