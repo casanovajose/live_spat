@@ -3,12 +3,12 @@ defmodule LiveSpatWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    traj = []
     socket =
       socket
       |> assign(point: %{x: 128, y: 128}, color: "#f00")
-      |> assign(traj: traj)
-      |> assign(path: traj_to_path(traj))
+      |> assign(traj: [])
+      |> assign(path: traj_to_path([]))
+      |> assign(markers: [])
 
     {:ok, socket}
   end
@@ -25,8 +25,19 @@ defmodule LiveSpatWeb.PageLive do
       socket
       |> add_point(x, y)
       |> assign(path: traj_to_path(socket.assigns.traj))
+      |> assign(markers: Enum.take_every(socket.assigns.traj, 10))
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("clear_traj", _params, socket) do
+    socket =
+      socket
+      |> assign(traj: [])
+      |> assign(path: traj_to_path([]))
+      |> assign(markers: [])
+    {:noreply,socket}
   end
 
   defp traj_to_path(trajectory) do
@@ -40,7 +51,7 @@ defmodule LiveSpatWeb.PageLive do
     socket =
     with true <- Enum.count(socket.assigns.traj) < 256,
         %{x: x1, y: y1} <- List.last(socket.assigns.traj),
-        true <- abs(x1 - x) > 2 || abs(y1 - y) > 2 do
+        true <- abs(x1 - x) > 1 || abs(y1 - y) > 1 do
           update(socket, :traj, fn t -> t ++ [%{x: x, y: y}] end)
     else
       nil -> assign(socket, traj: [%{x: x, y: y}])
