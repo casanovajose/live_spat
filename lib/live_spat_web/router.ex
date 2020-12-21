@@ -16,8 +16,10 @@ defmodule LiveSpatWeb.Router do
 
   scope "/", LiveSpatWeb do
     pipe_through :browser
-
-    live "/", PageLive, :index
+    live "/", HomeLive
+    live "/app/:session/editor/direct", EditorDirectLive, :index
+    live "/app/:session/editor/traj", EditorTrajLive, :index
+    live "/app/:session/live", SessionLive, :index
   end
 
   # Other scopes may use custom stacks.
