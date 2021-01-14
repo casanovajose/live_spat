@@ -33,6 +33,11 @@ defmodule LiveSpatWeb.EditorTrajLive do
     {:noreply,socket}
   end
 
+  def handle_event("save", _params, socket) do
+
+    {:noreply, socket}
+  end
+
   defp traj_to_path(trajectory) do
     trajectory
     |> Enum.map(fn t -> "#{t.x}, #{t.y} " end)
