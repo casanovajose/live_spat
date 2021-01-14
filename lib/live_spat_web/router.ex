@@ -20,6 +20,10 @@ defmodule LiveSpatWeb.Router do
     live "/app/:session/editor/direct", EditorDirectLive, :index
     live "/app/:session/editor/traj", EditorTrajLive, :index
     live "/app/:session/live", SessionLive, :index
+
+    # providing a test download for configuration
+    get "/app/:session/traj_download/test", TrajController, :download_test
+    get "/app/:session/traj_download/:name", TrajController, :download
   end
 
   # Other scopes may use custom stacks.
