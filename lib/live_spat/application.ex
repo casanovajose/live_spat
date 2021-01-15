@@ -8,7 +8,7 @@ defmodule LiveSpat.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      #LiveSpat.Repo,
+      LiveSpat.Repo,
       # Start the Telemetry supervisor
       LiveSpatWeb.Telemetry,
       # Start the PubSub system

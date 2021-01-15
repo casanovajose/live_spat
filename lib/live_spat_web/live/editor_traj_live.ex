@@ -1,5 +1,6 @@
 defmodule LiveSpatWeb.EditorTrajLive do
   use LiveSpatWeb, :live_view
+  alias LiveSpat.Trajectories.Trajectory
 
   @impl true
   def mount(_params, _session, socket) do
@@ -33,8 +34,22 @@ defmodule LiveSpatWeb.EditorTrajLive do
     {:noreply,socket}
   end
 
-  def handle_event("save", _params, socket) do
+  def handle_event("save_traj", params, socket) do
 
+    IO.inspect(params, label: "saving");
+
+    new_traj = %{
+      name: params["name"],
+      coords: socket.assigns.traj
+    }
+    LiveSpat.Trajectories.create_trajectory(new_traj);
+    # IO.inspect(resp)
+    {:noreply, socket}
+  end
+
+  def handle_event("name_traj", _params, socket) do
+    # TODO validate name?
+    #IO.inspect(params, label: "set name");
     {:noreply, socket}
   end
 

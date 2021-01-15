@@ -24,5 +24,15 @@
       marker-end="url(#arrow)" marker-start="url(#circle)"
     />
   </svg>
-  <button phx-click="clear_traj" >Clear</button>
+  <div>
+    <button phx-click="clear_traj" >Clear</button>
+
+    <div>
+      <form  phx-submit="save_traj">
+        <input  name="name" value=""/>
+        <button  type="submit" >Save</button>
+      </form>
+    </div>
+
+  </div>
 </section>
