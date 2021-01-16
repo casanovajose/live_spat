@@ -4,9 +4,10 @@ defmodule LiveSpatWeb.EditorTrajLive do
   alias :math, as: Math
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
     socket =
       socket
+      |> assign(session: params["session"])
       |> assign(traj: [])
       |> assign(path: traj_to_path([]))
       |> assign(markers: [])
@@ -44,7 +45,8 @@ defmodule LiveSpatWeb.EditorTrajLive do
 
     new_traj = %{
       name: params["name"],
-      coords: coords
+      coords: coords,
+      session: socket.assigns.session
     }
     # TODO check insert ok
     resp = Trajectories.create_trajectory(new_traj);
