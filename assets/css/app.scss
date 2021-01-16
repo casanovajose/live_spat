@@ -90,3 +90,15 @@
   display: none;
 }
 
+
+/* Common classes */
+
+.dash-border {
+  border: dashed rgba($color: #00ff00, $alpha: .5) 1px;
+}
+
+.arrow-mark::before {
+  font-size: 2em;
+  color: rgba(0, 255, 0, 0.5);
+  content: "▸"; 
+}

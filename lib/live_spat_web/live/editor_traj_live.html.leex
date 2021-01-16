@@ -1,5 +1,5 @@
-<section class="phx-hero">
-  <svg class="t-canvas traj" phx-hook="MouseDownTraj" width="256" height="256">
+<section class="phx-hero dash-border">
+  <svg class="t-canvas traj dash-border" phx-hook="MouseDownTraj" width="256" height="256">
     <defs>
       <marker id="arrow" markerWidth="20" markerHeight="20" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
         <path d="M0,0 L0,6 L9,3 z" fill="None" stroke="#000"/>
@@ -7,11 +7,11 @@
     </defs>
 
     <marker id="circle" markerWidth="8" markerHeight="8" refX="2" refY="2">
-        <circle cx="2" cy="2" r="2" stroke="#000" fill="#000"/>
+        <circle cx="2" cy="2" r="2" stroke="#0f0" fill="#000"/>
     </marker>
 
     <symbol id="cross" width="10" height="10" refX="center" refY="center">
-      <path d="M 3,3 L 7,7 M 3,7 L 7,3" fill="none" stroke="rgba(0,0,0,1)" stroke-width="1"/>
+      <path d="M 3,3 L 7,7 M 3,7 L 7,3" fill="none" stroke="rgba(0,255,0, 0.5)" stroke-width="1"/>
     </symbol>
 
     <%= for %{x: x, y: y} <- @markers do %>
@@ -20,17 +20,17 @@
 
     <polyline points="<%= @path %>"
       refX="center" refY="center"
-      stroke="#000" fill="none" stroke-dasharray="5 3"
+      stroke="rgba(0,255,0, 0.6)" fill="none" stroke-dasharray="5 3"
       marker-end="url(#arrow)" marker-start="url(#circle)"
     />
   </svg>
   <div>
-    <button phx-click="clear_traj" >Clear</button>
+    <button phx-click="clear_traj" class="dash-border" >Clear</button>
 
     <div>
       <form  phx-submit="save_traj">
-        <input  name="name" value=""/>
-        <button  type="submit" >Save</button>
+        <div><input  name="name" value="" class="dash-border"/></div>
+        <button  type="submit" class="dash-border">Save</button>
       </form>
     </div>
 
