@@ -1,6 +1,7 @@
 defmodule LiveSpatWeb.EditorTrajLive do
   use LiveSpatWeb, :live_view
-  alias LiveSpat.Trajectories.Trajectory
+  alias LiveSpat.Trajectories
+  alias :math, as: Math
 
   @impl true
   def mount(_params, _session, socket) do
@@ -38,12 +39,16 @@ defmodule LiveSpatWeb.EditorTrajLive do
 
     IO.inspect(params, label: "saving");
 
+    coords = Enum.map(socket.assigns.traj, &cartesian_to_polar/1)
+    IO.inspect(Enum.count(coords))
+
     new_traj = %{
       name: params["name"],
-      coords: socket.assigns.traj
+      coords: coords
     }
-    LiveSpat.Trajectories.create_trajectory(new_traj);
-    # IO.inspect(resp)
+    # TODO check insert ok
+    resp = Trajectories.create_trajectory(new_traj);
+
     {:noreply, socket}
   end
 
@@ -73,4 +78,13 @@ defmodule LiveSpatWeb.EditorTrajLive do
     # IO.inspect(Enum.count(socket.assigns.traj))
     socket
   end
+
+  defp cartesian_to_polar(%{x: x, y: y}) do
+    r = trunc(Math.sqrt(x*x + y*y))
+    t = Math.atan2(y, x) * (180/Math.pi)
+      |> trunc()
+
+    %{x: x, y: y, r: r, t: t}
+  end
+
 end

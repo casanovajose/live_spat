@@ -15,7 +15,7 @@ defmodule LiveSpat.Trajectories.Trajectory do
   @doc false
   def changeset(trajectory, attrs) do
     trajectory
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :session])
     |> cast_embed(:coords)
     |> validate_required([:name])
   end
@@ -24,6 +24,7 @@ end
 defmodule LiveSpat.Trajectories.Coords do
   use Ecto.Schema
   import Ecto.Changeset
+
 
   @primary_key false
   embedded_schema  do
@@ -35,6 +36,7 @@ defmodule LiveSpat.Trajectories.Coords do
 
   def changeset(coords, attrs) do
     coords
-    |> cast(attrs, [:x, :y])
+    #|> convert_to_polar(attrs)
+    |> cast(attrs, [:x, :y, :r, :t])
   end
 end
