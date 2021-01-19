@@ -1,17 +1,26 @@
 defmodule LiveSpatWeb.EditorTrajLive do
   use LiveSpatWeb, :live_view
   alias LiveSpat.Trajectories
+  alias LiveSpat.Repo
+  alias LiveSpat.Trajectories.Trajectory
   alias :math, as: Math
+  import Ecto.Query, only: [from: 2]
 
   @impl true
   def mount(params, _session, socket) do
+    traj_query = from t in Trajectory,
+      select: t.name,
+      where: t.session == ^params["session"]
+    a =  Repo.all(traj_query)
+    IO.inspect(a)
     socket =
       socket
       |> assign(session: params["session"])
       |> assign(traj: [])
       |> assign(path: traj_to_path([]))
       |> assign(markers: [])
-
+      |> assign(traj_list: a)
+    #IO.inspect(socket.assigns.traj_list)
     {:ok, socket}
   end
 

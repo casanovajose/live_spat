@@ -36,3 +36,11 @@
 
   </div>
 </section>
+<section class="phx-hero dash-border">
+  <ul>
+  <%= for t <- @traj_list do %>
+    <li><%= t %><button class="dash-border">OPEN</button>
+    </li>
+   <% end %>
+  </ul>
+</section>
